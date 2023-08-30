@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-var max_speed = 200
+var max_speed = 150
 var acceleration = 1000
 var friction = 800
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
@@ -8,10 +8,18 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 var input = Vector2.ZERO
 
 func get_input() -> Vector2:
-	input.x = int(Input.is_action_pressed("right")) - int(Input.is_action_pressed("left"))
 	# TO DO
 	# proper jumping and falling stuff, maybe cool stuff later? (coyote time, etc.)
-	input.y = int(Input.is_action_pressed("down")) - int(Input.is_action_pressed("jump"))
+	input = Vector2.ZERO
+	
+	if Input.is_action_pressed("left"):
+		input.x = -1
+	elif Input.is_action_pressed("right"):
+		input.x = 1
+	
+	if Input.is_action_pressed("jump"):
+		input.y = -1
+	
 	return input.normalized()
 
 func player_movement(delta) -> void:
@@ -32,7 +40,7 @@ func player_movement(delta) -> void:
 
 func apply_gravity(delta) -> void:
 	if is_on_floor():
-		velocity.y = 0
+		pass
 	else:
 		velocity.y += gravity * delta
 
