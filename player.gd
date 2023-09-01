@@ -4,8 +4,9 @@ var max_speed = 150.0
 var acceleration = 100.0
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 var target_speed = 0.0
-
 var input = Vector2.ZERO
+
+@onready var sprite = $AnimatedSprite2D
 
 func get_input() -> Vector2:
 	# TO DO
@@ -15,9 +16,11 @@ func get_input() -> Vector2:
 	if Input.is_action_pressed("left"):
 		input.x = -1
 		target_speed = max_speed
+		sprite.flip_h = true # left is other than default (true)
 	elif Input.is_action_pressed("right"):
 		input.x = 1
 		target_speed = max_speed
+		sprite.flip_h = false # right is default (false)
 	
 	if Input.is_action_pressed("jump"):
 		input.y = -1
@@ -39,7 +42,19 @@ func player_movement(delta) -> void:
 	if !is_on_floor():
 		velocity.y += gravity * delta
 	
+	# Set the animations
+	if !is_on_floor():
+		sprite.play("jump")
+	elif velocity.x != 0:
+		sprite.play("run")
+	else:
+		sprite.play("run")
+		sprite.stop() # stop sets to first frame of playing anim
+	
 	move_and_slide()
 
 func _physics_process(delta):
 	player_movement(delta)
+
+func _ready():
+	pass
