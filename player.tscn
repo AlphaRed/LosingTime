@@ -57,3 +57,10 @@ shape = SubResource("RectangleShape2D_g4dmc")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_64mdt")
 animation = &"jump"
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(1.25, 1.25)
+limit_left = 0
+limit_top = 0
+limit_right = 320
+limit_bottom = 240

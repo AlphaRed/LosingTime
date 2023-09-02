@@ -7,6 +7,7 @@ var target_speed = 0.0
 var input = Vector2.ZERO
 
 @onready var sprite = $AnimatedSprite2D
+@onready var cam = $Camera2D
 
 func get_input() -> Vector2:
 	# TO DO
