@@ -6,6 +6,7 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 var target_speed = 0.0
 var dir = Vector2.ZERO
 var door = false
+var filepath = ""
 
 @onready var sprite = $AnimatedSprite2D
 @onready var cam = $Camera2D
@@ -68,7 +69,12 @@ func _ready():
 func _on_next_lvl_body_entered(body):
 	if body.is_in_group("PlayerGroup"):
 		door = true
+		
 
 func _on_next_lvl_body_exited(body):
 	if body.is_in_group("PlayerGroup"):
 		door = false
+
+
+func _on_boris_body_entered(_body):
+	pass # Replace with function body.

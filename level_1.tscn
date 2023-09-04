@@ -1,10 +1,13 @@
-[gd_scene load_steps=5 format=3 uid="uid://bq43mx3cxvu37"]
+[gd_scene load_steps=6 format=3 uid="uid://bq43mx3cxvu37"]
 
 [ext_resource type="TileSet" uid="uid://cci23yfdd8pnl" path="res://tilemap.tres" id="1_q6ppf"]
 [ext_resource type="PackedScene" uid="uid://dv5ydw3aqc2mv" path="res://player.tscn" id="2_kjmgd"]
 [ext_resource type="Script" path="res://NextLvl.gd" id="3_n1r6r"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3e8lo"]
+size = Vector2(16, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_do011"]
 size = Vector2(16, 16)
 
 [node name="Level1" type="Node2D"]
@@ -24,6 +27,12 @@ script = ExtResource("3_n1r6r")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="NextLvl"]
 position = Vector2(200, 168)
 shape = SubResource("RectangleShape2D_3e8lo")
+
+[node name="NextLvl2" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="NextLvl2"]
+position = Vector2(312, 200)
+shape = SubResource("RectangleShape2D_do011")
 
 [connection signal="body_entered" from="NextLvl" to="Player" method="_on_next_lvl_body_entered"]
 [connection signal="body_exited" from="NextLvl" to="Player" method="_on_next_lvl_body_exited"]

@@ -1,7 +1,34 @@
-[gd_scene load_steps=3 format=3 uid="uid://cemide6mvt3cn"]
+[gd_scene load_steps=9 format=3 uid="uid://cemide6mvt3cn"]
 
 [ext_resource type="TileSet" uid="uid://cci23yfdd8pnl" path="res://tilemap.tres" id="1_03qfg"]
 [ext_resource type="PackedScene" uid="uid://dv5ydw3aqc2mv" path="res://player.tscn" id="2_rtmhi"]
+[ext_resource type="Texture2D" uid="uid://bgs26kg173ngn" path="res://chars.png" id="3_5mb1n"]
+[ext_resource type="Script" path="res://Boris.gd" id="3_q81xx"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hisrs"]
+atlas = ExtResource("3_5mb1n")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pgvr0"]
+atlas = ExtResource("3_5mb1n")
+region = Rect2(16, 16, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_l1mof"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hisrs")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pgvr0")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 2.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6gv81"]
+size = Vector2(48, 16)
 
 [node name="level_2" type="Node2D"]
 
@@ -12,3 +39,18 @@ layer_0/tile_data = PackedInt32Array(917504, 327680, 0, 851968, 327680, 0, 78643
 
 [node name="Player" parent="." instance=ExtResource("2_rtmhi")]
 position = Vector2(9, 168)
+
+[node name="Boris" type="Area2D" parent="."]
+script = ExtResource("3_q81xx")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Boris"]
+position = Vector2(168, 136)
+sprite_frames = SubResource("SpriteFrames_l1mof")
+animation = &"idle"
+frame_progress = 0.113371
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Boris"]
+position = Vector2(168, 136)
+shape = SubResource("RectangleShape2D_6gv81")
+
+[connection signal="body_entered" from="Boris" to="Player" method="_on_boris_body_entered"]

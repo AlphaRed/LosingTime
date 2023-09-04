@@ -1,3 +1,4 @@
 extends Area2D
 
-@export var nextLevel = 1
+# Want to use this so I can specify the next level...should work in theory
+@export var nextLevel = "level_2"
