@@ -28,9 +28,9 @@ func get_input() -> Vector2:
 	if Input.is_action_pressed("jump"):
 		dir.y = -1
 	
-	if Input.is_action_pressed("use"):
+	if Input.is_action_pressed("interact"):
 		if door == true:
-			get_tree().change_scene_to_file("res://level_2.tscn")
+			get_tree().change_scene_to_file(filepath)
 	
 	return dir.normalized()
 
@@ -69,12 +69,25 @@ func _ready():
 func _on_next_lvl_body_entered(body):
 	if body.is_in_group("PlayerGroup"):
 		door = true
-		
+		filepath = "res://level_2.tscn"
 
 func _on_next_lvl_body_exited(body):
 	if body.is_in_group("PlayerGroup"):
 		door = false
+		filepath = ""
 
 
 func _on_boris_body_entered(_body):
 	pass # Replace with function body.
+
+
+func _on_next_lvl_1_body_entered(body):
+	if body.is_in_group("PlayerGroup"):
+		door = true
+		filepath = "res://level_3.tscn"
+
+
+func _on_next_lvl_1_body_exited(body):
+	if body.is_in_group("PlayerGroup"):
+		door = false
+		filepath = ""

@@ -28,11 +28,13 @@ script = ExtResource("3_n1r6r")
 position = Vector2(200, 168)
 shape = SubResource("RectangleShape2D_3e8lo")
 
-[node name="NextLvl2" type="Area2D" parent="."]
+[node name="NextLvl1" type="Area2D" parent="."]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="NextLvl2"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="NextLvl1"]
 position = Vector2(312, 200)
 shape = SubResource("RectangleShape2D_do011")
 
 [connection signal="body_entered" from="NextLvl" to="Player" method="_on_next_lvl_body_entered"]
 [connection signal="body_exited" from="NextLvl" to="Player" method="_on_next_lvl_body_exited"]
+[connection signal="body_entered" from="NextLvl1" to="Player" method="_on_next_lvl_1_body_entered"]
+[connection signal="body_exited" from="NextLvl1" to="Player" method="_on_next_lvl_1_body_exited"]

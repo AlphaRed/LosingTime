@@ -1,0 +1,6 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://fo1wws88ge36"]
+
+[ext_resource type="FontFile" uid="uid://qbt1206dtllu" path="res://dpcomic.ttf" id="1_ico7c"]
+
+[resource]
+default_font = ExtResource("1_ico7c")
