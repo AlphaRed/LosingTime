@@ -1,11 +1,13 @@
 extends CharacterBody2D
 
+enum {NA, DOOR, TALK, PICKUP} # interaction enum
+
 var max_speed = 150.0
 var acceleration = 100.0
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 var target_speed = 0.0
 var dir = Vector2.ZERO
-var door = false
+var interact = NA
 var filepath = ""
 
 @onready var sprite = $AnimatedSprite2D
@@ -29,8 +31,10 @@ func get_input() -> Vector2:
 		dir.y = -1
 	
 	if Input.is_action_pressed("interact"):
-		if door == true:
+		if interact == DOOR:
 			get_tree().change_scene_to_file(filepath)
+		elif interact == TALK:
+			pass
 	
 	return dir.normalized()
 
@@ -66,28 +70,31 @@ func _physics_process(delta):
 func _ready():
 	pass
 
-func _on_next_lvl_body_entered(body):
+# Next Level Methods
+# Level 1
+func _on_to_generator_body_entered(body):
 	if body.is_in_group("PlayerGroup"):
-		door = true
+		print("Entering generator room")
+		interact = DOOR
 		filepath = "res://level_2.tscn"
 
-func _on_next_lvl_body_exited(body):
+func _on_to_generator_body_exited(body):
 	if body.is_in_group("PlayerGroup"):
-		door = false
+		print("Exited generator room")
+		interact = NA
 		filepath = ""
 
+# Level 2
+# Level 3
 
-func _on_boris_body_entered(_body):
-	pass # Replace with function body.
-
-
-func _on_next_lvl_1_body_entered(body):
+# Talking methods
+func _on_boris_body_entered(body):
 	if body.is_in_group("PlayerGroup"):
-		door = true
-		filepath = "res://level_3.tscn"
+		print("can interact")
+		interact = TALK
 
 
-func _on_next_lvl_1_body_exited(body):
+func _on_boris_body_exited(body):
 	if body.is_in_group("PlayerGroup"):
-		door = false
-		filepath = ""
+		print("cannot interact")
+		interact = NA

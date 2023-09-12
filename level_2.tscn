@@ -41,6 +41,7 @@ layer_0/tile_data = PackedInt32Array(917504, 327680, 0, 851968, 327680, 0, 78643
 position = Vector2(9, 168)
 
 [node name="Boris" type="Area2D" parent="."]
+collision_mask = 2
 script = ExtResource("3_q81xx")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Boris"]
@@ -54,3 +55,4 @@ position = Vector2(168, 136)
 shape = SubResource("RectangleShape2D_6gv81")
 
 [connection signal="body_entered" from="Boris" to="Player" method="_on_boris_body_entered"]
+[connection signal="body_exited" from="Boris" to="Player" method="_on_boris_body_exited"]
