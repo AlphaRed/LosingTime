@@ -1,7 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://dv5ydw3aqc2mv"]
+[gd_scene load_steps=11 format=3 uid="uid://dv5ydw3aqc2mv"]
 
 [ext_resource type="Texture2D" uid="uid://bgs26kg173ngn" path="res://chars.png" id="1_5quhv"]
 [ext_resource type="Script" path="res://player.gd" id="1_nop42"]
+[ext_resource type="Theme" uid="uid://fo1wws88ge36" path="res://menu_theme.tres" id="3_ij1dl"]
+[ext_resource type="Script" path="res://DialogBox.gd" id="3_pqm1r"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_g4dmc"]
 size = Vector2(16, 16)
@@ -65,3 +67,25 @@ limit_left = 0
 limit_top = 0
 limit_right = 320
 limit_bottom = 240
+
+[node name="DialogBox" type="CanvasLayer" parent="."]
+script = ExtResource("3_pqm1r")
+
+[node name="Background" type="ColorRect" parent="DialogBox"]
+offset_left = 5.0
+offset_top = 178.0
+offset_right = 251.0
+offset_bottom = 218.0
+color = Color(0.0431373, 0.133333, 0.235294, 1)
+
+[node name="Text" type="Label" parent="DialogBox"]
+offset_left = 8.0
+offset_top = 182.0
+offset_right = 248.0
+offset_bottom = 214.0
+theme = ExtResource("3_ij1dl")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 14
+autowrap_mode = 2
+
+[connection signal="interact_talk" from="." to="DialogBox" method="_on_player_interact_talk"]

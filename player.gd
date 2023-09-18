@@ -1,6 +1,9 @@
 extends CharacterBody2D
 
 enum {NA, DOOR, TALK, PICKUP} # interaction enum
+enum {NONE, BORIS, VENDOR, MECHANIC} # NPC enum
+
+signal interact_talk(NPC_name)
 
 var max_speed = 150.0
 var acceleration = 100.0
@@ -8,6 +11,7 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 var target_speed = 0.0
 var dir = Vector2.ZERO
 var interact = NA
+var NPC = NONE
 var filepath = ""
 
 @onready var sprite = $AnimatedSprite2D
@@ -30,11 +34,14 @@ func get_input() -> Vector2:
 	if Input.is_action_pressed("jump"):
 		dir.y = -1
 	
-	if Input.is_action_pressed("interact"):
+	if Input.is_action_just_pressed("interact"): # less flickering this way
 		if interact == DOOR:
 			get_tree().change_scene_to_file(filepath)
 		elif interact == TALK:
-			pass
+			if NPC == BORIS:
+				interact_talk.emit(BORIS)
+			else:
+				pass
 	
 	return dir.normalized()
 
@@ -92,9 +99,11 @@ func _on_boris_body_entered(body):
 	if body.is_in_group("PlayerGroup"):
 		print("can interact")
 		interact = TALK
+		NPC = BORIS
 
 
 func _on_boris_body_exited(body):
 	if body.is_in_group("PlayerGroup"):
 		print("cannot interact")
 		interact = NA
+		NPC = NONE
