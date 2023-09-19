@@ -91,8 +91,34 @@ func _on_to_generator_body_exited(body):
 		interact = NA
 		filepath = ""
 
+func _on_to_town_body_entered(body):
+	if body.is_in_group("PlayerGroup"):
+		interact = DOOR
+		filepath = "res://level_3.tscn"
+
+func _on_to_town_body_exited(body):
+	if body.is_in_group("PlayerGroup"):
+		interact = NA
+		filepath = ""
+
 # Level 2
+func _on_to_castle_body_entered(body):
+	if body.is_in_group("PlayerGroup"):
+		interact = DOOR
+		filepath = "res://level_1.tscn"
+
+func _on_to_castle_body_exited(body):
+	if body.is_in_group("PlayerGroup"):
+		interact = NA
+		filepath = ""
+
 # Level 3
+# Level 4
+# Level 5
+# Level 6
+# Level 7
+# Level 8
+# Level 9
 
 # Talking methods
 func _on_boris_body_entered(body):
@@ -107,3 +133,4 @@ func _on_boris_body_exited(body):
 		print("cannot interact")
 		interact = NA
 		NPC = NONE
+
