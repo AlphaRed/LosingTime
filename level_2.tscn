@@ -33,7 +33,7 @@ size = Vector2(48, 16)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kej2l"]
 size = Vector2(16, 16)
 
-[node name="level_2" type="Node2D"]
+[node name="Level2" type="Node2D"]
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = ExtResource("1_03qfg")

@@ -113,6 +113,16 @@ func _on_to_castle_body_exited(body):
 		filepath = ""
 
 # Level 3
+func _on_to_castle_other_body_entered(body):
+	if body.is_in_group("PlayerGroup"):
+		interact = DOOR
+		filepath = "res://level_1.tscn"
+
+func _on_to_castle_other_body_exited(body):
+	if body.is_in_group("PlayerGroup"):
+		interact = NA
+		filepath = ""
+
 # Level 4
 # Level 5
 # Level 6
