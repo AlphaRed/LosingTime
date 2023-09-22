@@ -123,6 +123,36 @@ func _on_to_castle_other_body_exited(body):
 		interact = NA
 		filepath = ""
 
+func _on_to_farm_from_town_body_entered(body):
+	if body.is_in_group("PlayerGroup"):
+		interact = DOOR
+		filepath = "res://level_6.tscn"
+
+func _on_to_farm_from_town_body_exited(body):
+	if body.is_in_group("PlayerGroup"):
+		interact = NA
+		filepath = ""
+
+func _on_to_garage_from_town_body_entered(body):
+	if body.is_in_group("PlayerGroup"):
+		interact = DOOR
+		filepath = "res://level_4.tscn"
+
+func _on_to_garage_from_town_body_exited(body):
+	if body.is_in_group("PlayerGroup"):
+		interact = NA
+		filepath = ""
+
+func _on_to_barber_from_town_body_entered(body):
+	if body.is_in_group("PlayerGroup"):
+		interact = DOOR
+		filepath = "res://level_5.tscn"
+
+func _on_to_barber_from_town_body_exited(body):
+	if body.is_in_group("PlayerGroup"):
+		interact = NA
+		filepath = ""
+
 # Level 4
 # Level 5
 # Level 6
@@ -143,4 +173,7 @@ func _on_boris_body_exited(body):
 		print("cannot interact")
 		interact = NA
 		NPC = NONE
+
+
+
 

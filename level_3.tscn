@@ -1,7 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://j2rostp0ad5v"]
+[gd_scene load_steps=13 format=3 uid="uid://j2rostp0ad5v"]
 
 [ext_resource type="TileSet" uid="uid://cci23yfdd8pnl" path="res://tilemap.tres" id="1_pic1r"]
 [ext_resource type="PackedScene" uid="uid://dv5ydw3aqc2mv" path="res://player.tscn" id="2_hid38"]
+[ext_resource type="Texture2D" uid="uid://bgs26kg173ngn" path="res://chars.png" id="3_eubhr"]
+[ext_resource type="Script" path="res://Boris.gd" id="3_s8p68"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_agrfn"]
 size = Vector2(16, 16)
@@ -10,10 +12,35 @@ size = Vector2(16, 16)
 size = Vector2(16, 16)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_axg1p"]
-size = Vector2(16, 17)
+size = Vector2(16, 16)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7bxdb"]
 size = Vector2(16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fcwre"]
+atlas = ExtResource("3_eubhr")
+region = Rect2(192, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uwyak"]
+atlas = ExtResource("3_eubhr")
+region = Rect2(208, 16, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_yd5pt"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fcwre")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uwyak")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 2.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gievq"]
+size = Vector2(48, 16)
 
 [node name="Level3" type="Node2D"]
 
@@ -33,29 +60,48 @@ position = Vector2(8, 184)
 shape = SubResource("RectangleShape2D_agrfn")
 debug_color = Color(0.866667, 0, 0.862745, 0.419608)
 
-[node name="ToFarm" type="Area2D" parent="."]
+[node name="ToFarmFromTown" type="Area2D" parent="."]
 collision_mask = 2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ToFarm"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ToFarmFromTown"]
 position = Vector2(312, 184)
 shape = SubResource("RectangleShape2D_1yh4f")
 debug_color = Color(0.866667, 0, 0.862745, 0.419608)
 
-[node name="ToGarage" type="Area2D" parent="."]
+[node name="ToGarageFromTown" type="Area2D" parent="."]
 collision_mask = 2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ToGarage"]
-position = Vector2(88, 185)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ToGarageFromTown"]
+position = Vector2(88, 184)
 shape = SubResource("RectangleShape2D_axg1p")
 debug_color = Color(0.866667, 0, 0.862745, 0.419608)
 
-[node name="ToBarber" type="Area2D" parent="."]
+[node name="ToBarberFromTown" type="Area2D" parent="."]
 collision_mask = 2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ToBarber"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ToBarberFromTown"]
 position = Vector2(232, 184)
 shape = SubResource("RectangleShape2D_7bxdb")
 debug_color = Color(0.866667, 0, 0.862745, 0.419608)
 
+[node name="Vendor" type="Area2D" parent="."]
+collision_mask = 2
+script = ExtResource("3_s8p68")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Vendor"]
+position = Vector2(184, 184)
+sprite_frames = SubResource("SpriteFrames_yd5pt")
+animation = &"idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Vendor"]
+position = Vector2(184, 184)
+shape = SubResource("RectangleShape2D_gievq")
+
 [connection signal="body_entered" from="ToCastleOther" to="Player" method="_on_to_castle_other_body_entered"]
 [connection signal="body_exited" from="ToCastleOther" to="Player" method="_on_to_castle_other_body_exited"]
+[connection signal="body_entered" from="ToFarmFromTown" to="Player" method="_on_to_farm_from_town_body_entered"]
+[connection signal="body_exited" from="ToFarmFromTown" to="Player" method="_on_to_farm_from_town_body_exited"]
+[connection signal="body_entered" from="ToGarageFromTown" to="Player" method="_on_to_garage_from_town_body_entered"]
+[connection signal="body_exited" from="ToGarageFromTown" to="Player" method="_on_to_garage_from_town_body_exited"]
+[connection signal="body_entered" from="ToBarberFromTown" to="Player" method="_on_to_barber_from_town_body_entered"]
+[connection signal="body_exited" from="ToBarberFromTown" to="Player" method="_on_to_barber_from_town_body_exited"]
