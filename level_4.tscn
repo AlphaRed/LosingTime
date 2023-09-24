@@ -1,10 +1,37 @@
-[gd_scene load_steps=4 format=3 uid="uid://btdgi1md7ksqm"]
+[gd_scene load_steps=10 format=3 uid="uid://btdgi1md7ksqm"]
 
 [ext_resource type="TileSet" uid="uid://cci23yfdd8pnl" path="res://tilemap.tres" id="1_vubb4"]
 [ext_resource type="PackedScene" uid="uid://dv5ydw3aqc2mv" path="res://player.tscn" id="2_gdy4r"]
+[ext_resource type="Script" path="res://Mechanic.gd" id="3_8ar1e"]
+[ext_resource type="Texture2D" uid="uid://bgs26kg173ngn" path="res://chars.png" id="3_elgy8"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lle7b"]
 size = Vector2(16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ebgww"]
+atlas = ExtResource("3_elgy8")
+region = Rect2(48, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jiceu"]
+atlas = ExtResource("3_elgy8")
+region = Rect2(32, 16, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_p4fg4"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ebgww")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jiceu")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 2.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rf3s7"]
+size = Vector2(48, 16)
 
 [node name="Level4" type="Node2D"]
 
@@ -16,10 +43,30 @@ layer_0/tile_data = PackedInt32Array(0, 196608, 5, 1, 196608, 5, 2, 196608, 5, 3
 [node name="Player" parent="." instance=ExtResource("2_gdy4r")]
 position = Vector2(12, 184)
 
-[node name="ToTownOther" type="Area2D" parent="."]
+[node name="ToTownFromGarage" type="Area2D" parent="."]
 collision_mask = 2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ToTownOther"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ToTownFromGarage"]
 position = Vector2(8, 184)
 shape = SubResource("RectangleShape2D_lle7b")
 debug_color = Color(0.866667, 0, 0.862745, 0.419608)
+
+[node name="Mechanic" type="Area2D" parent="."]
+position = Vector2(121, 184)
+collision_mask = 2
+script = ExtResource("3_8ar1e")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Mechanic"]
+sprite_frames = SubResource("SpriteFrames_p4fg4")
+animation = &"idle"
+frame = 1
+frame_progress = 0.213055
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Mechanic"]
+position = Vector2(-1, 0)
+shape = SubResource("RectangleShape2D_rf3s7")
+
+[connection signal="body_entered" from="ToTownFromGarage" to="Player" method="_on_to_town_from_garage_body_entered"]
+[connection signal="body_exited" from="ToTownFromGarage" to="Player" method="_on_to_town_from_garage_body_exited"]
+[connection signal="body_entered" from="Mechanic" to="Player" method="_on_mechanic_body_entered"]
+[connection signal="body_exited" from="Mechanic" to="Player" method="_on_mechanic_body_exited"]

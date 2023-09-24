@@ -42,6 +42,8 @@ func get_input() -> Vector2:
 				interact_talk.emit(BORIS)
 			elif NPC == VENDOR:
 				interact_talk.emit(VENDOR)
+			elif NPC == MECHANIC:
+				interact_talk.emit(MECHANIC)
 			else:
 				pass
 	
@@ -156,6 +158,17 @@ func _on_to_barber_from_town_body_exited(body):
 		filepath = ""
 
 # Level 4
+func _on_to_town_from_garage_body_entered(body):
+	if body.is_in_group("PlayerGroup"):
+		interact = DOOR
+		filepath = "res://level_3.tscn"
+
+
+func _on_to_town_from_garage_body_exited(body):
+	if body.is_in_group("PlayerGroup"):
+		interact = NA
+		filepath = ""
+
 # Level 5
 # Level 6
 # Level 7
@@ -183,6 +196,19 @@ func _on_vendor_body_entered(body):
 		NPC = VENDOR
 
 func _on_vendor_body_exited(body):
+	if body.is_in_group("PlayerGroup"):
+		print("cannot interact")
+		interact = NA
+		NPC = NONE
+
+func _on_mechanic_body_entered(body):
+	if body.is_in_group("PlayerGroup"):
+		print("can interact")
+		interact = TALK
+		NPC = MECHANIC
+
+
+func _on_mechanic_body_exited(body):
 	if body.is_in_group("PlayerGroup"):
 		print("cannot interact")
 		interact = NA

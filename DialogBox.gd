@@ -28,3 +28,5 @@ func _on_player_interact_talk(NPC_name):
 		textbox.text = Boris
 	elif NPC_name == VENDOR:
 		textbox.text = Vendor
+	elif NPC_name == MECHANIC:
+		textbox.text = Mechanic
