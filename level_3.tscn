@@ -105,3 +105,5 @@ shape = SubResource("RectangleShape2D_gievq")
 [connection signal="body_exited" from="ToGarageFromTown" to="Player" method="_on_to_garage_from_town_body_exited"]
 [connection signal="body_entered" from="ToBarberFromTown" to="Player" method="_on_to_barber_from_town_body_entered"]
 [connection signal="body_exited" from="ToBarberFromTown" to="Player" method="_on_to_barber_from_town_body_exited"]
+[connection signal="body_entered" from="Vendor" to="Player" method="_on_vendor_body_entered"]
+[connection signal="body_exited" from="Vendor" to="Player" method="_on_vendor_body_exited"]

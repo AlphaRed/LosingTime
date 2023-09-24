@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
 enum {NA, DOOR, TALK, PICKUP} # interaction enum
-enum {NONE, BORIS, VENDOR, MECHANIC} # NPC enum
+enum {NONE, BORIS, VENDOR, MECHANIC, BARBER, FARMER} # NPC enum
 
 signal interact_talk(NPC_name)
 
@@ -40,6 +40,8 @@ func get_input() -> Vector2:
 		elif interact == TALK:
 			if NPC == BORIS:
 				interact_talk.emit(BORIS)
+			elif NPC == VENDOR:
+				interact_talk.emit(VENDOR)
 			else:
 				pass
 	
@@ -174,6 +176,14 @@ func _on_boris_body_exited(body):
 		interact = NA
 		NPC = NONE
 
+func _on_vendor_body_entered(body):
+	if body.is_in_group("PlayerGroup"):
+		print("can interact")
+		interact = TALK
+		NPC = VENDOR
 
-
-
+func _on_vendor_body_exited(body):
+	if body.is_in_group("PlayerGroup"):
+		print("cannot interact")
+		interact = NA
+		NPC = NONE
