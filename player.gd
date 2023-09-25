@@ -44,6 +44,8 @@ func get_input() -> Vector2:
 				interact_talk.emit(VENDOR)
 			elif NPC == MECHANIC:
 				interact_talk.emit(MECHANIC)
+			elif NPC == BARBER:
+				interact_talk.emit(BARBER)
 			else:
 				pass
 	
@@ -171,13 +173,23 @@ func _on_to_town_from_garage_body_entered(body):
 		filepath = "res://level_3.tscn"
 		Globals.spawnLocation = Vector2(88, 184)
 
-
 func _on_to_town_from_garage_body_exited(body):
 	if body.is_in_group("PlayerGroup"):
 		interact = NA
 		filepath = ""
 
 # Level 5
+func _on_to_town_from_barber_body_entered(body):
+	if body.is_in_group("PlayerGroup"):
+		interact = DOOR
+		filepath = "res://level_3.tscn"
+		Globals.spawnLocation = Vector2(232, 184)
+
+func _on_to_town_from_barber_body_exited(body):
+	if body.is_in_group("PlayerGroup"):
+		interact = NA
+		filepath = ""
+
 # Level 6
 # Level 7
 # Level 8
@@ -215,8 +227,20 @@ func _on_mechanic_body_entered(body):
 		interact = TALK
 		NPC = MECHANIC
 
-
 func _on_mechanic_body_exited(body):
+	if body.is_in_group("PlayerGroup"):
+		print("cannot interact")
+		interact = NA
+		NPC = NONE
+
+func _on_barber_body_entered(body):
+	if body.is_in_group("PlayerGroup"):
+		print("can interact")
+		interact = TALK
+		NPC = BARBER
+
+
+func _on_barber_body_exited(body):
 	if body.is_in_group("PlayerGroup"):
 		print("cannot interact")
 		interact = NA
