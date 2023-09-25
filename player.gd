@@ -79,7 +79,7 @@ func _physics_process(delta):
 	player_movement(delta)
 
 func _ready():
-	pass
+	set_position(Globals.spawnLocation)
 
 # Next Level Methods
 # Level 1
@@ -88,6 +88,7 @@ func _on_to_generator_body_entered(body):
 		print("Entering generator room")
 		interact = DOOR
 		filepath = "res://level_2.tscn"
+		Globals.spawnLocation = Vector2(9, 168)
 
 func _on_to_generator_body_exited(body):
 	if body.is_in_group("PlayerGroup"):
@@ -99,6 +100,7 @@ func _on_to_town_body_entered(body):
 	if body.is_in_group("PlayerGroup"):
 		interact = DOOR
 		filepath = "res://level_3.tscn"
+		Globals.spawnLocation = Vector2(10, 184)
 
 func _on_to_town_body_exited(body):
 	if body.is_in_group("PlayerGroup"):
@@ -110,6 +112,7 @@ func _on_to_castle_body_entered(body):
 	if body.is_in_group("PlayerGroup"):
 		interact = DOOR
 		filepath = "res://level_1.tscn"
+		Globals.spawnLocation = Vector2(200, 168)
 
 func _on_to_castle_body_exited(body):
 	if body.is_in_group("PlayerGroup"):
@@ -121,6 +124,7 @@ func _on_to_castle_other_body_entered(body):
 	if body.is_in_group("PlayerGroup"):
 		interact = DOOR
 		filepath = "res://level_1.tscn"
+		Globals.spawnLocation = Vector2(312, 200)
 
 func _on_to_castle_other_body_exited(body):
 	if body.is_in_group("PlayerGroup"):
@@ -131,6 +135,7 @@ func _on_to_farm_from_town_body_entered(body):
 	if body.is_in_group("PlayerGroup"):
 		interact = DOOR
 		filepath = "res://level_6.tscn"
+		Globals.spawnLocation = Vector2(10, 184)
 
 func _on_to_farm_from_town_body_exited(body):
 	if body.is_in_group("PlayerGroup"):
@@ -141,6 +146,7 @@ func _on_to_garage_from_town_body_entered(body):
 	if body.is_in_group("PlayerGroup"):
 		interact = DOOR
 		filepath = "res://level_4.tscn"
+		Globals.spawnLocation = Vector2(10, 184)
 
 func _on_to_garage_from_town_body_exited(body):
 	if body.is_in_group("PlayerGroup"):
@@ -151,6 +157,7 @@ func _on_to_barber_from_town_body_entered(body):
 	if body.is_in_group("PlayerGroup"):
 		interact = DOOR
 		filepath = "res://level_5.tscn"
+		Globals.spawnLocation = Vector2(10, 184)
 
 func _on_to_barber_from_town_body_exited(body):
 	if body.is_in_group("PlayerGroup"):
@@ -162,6 +169,7 @@ func _on_to_town_from_garage_body_entered(body):
 	if body.is_in_group("PlayerGroup"):
 		interact = DOOR
 		filepath = "res://level_3.tscn"
+		Globals.spawnLocation = Vector2(88, 184)
 
 
 func _on_to_town_from_garage_body_exited(body):
