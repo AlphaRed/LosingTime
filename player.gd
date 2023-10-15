@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
 enum {NA, DOOR, TALK, PICKUP} # interaction enum
-enum {NONE, BORIS, VENDOR, MECHANIC, BARBER, FARMER} # NPC enum
+enum {NONE, BORIS, VENDOR, MECHANIC, BARBER, FARMER, GLIDER, DIVER, OSCAR} # NPC enum
 
 signal interact_talk(NPC_name)
 
@@ -46,6 +46,14 @@ func get_input() -> Vector2:
 				interact_talk.emit(MECHANIC)
 			elif NPC == BARBER:
 				interact_talk.emit(BARBER)
+			elif NPC == FARMER:
+				interact_talk.emit(FARMER)
+			elif NPC == GLIDER:
+				interact_talk.emit(GLIDER)
+			elif NPC == DIVER:
+				interact_talk.emit(DIVER)
+			elif NPC == OSCAR:
+				interact_talk.emit(OSCAR)
 			else:
 				pass
 	
@@ -191,6 +199,28 @@ func _on_to_town_from_barber_body_exited(body):
 		filepath = ""
 
 # Level 6
+func _on_to_town_from_farm_body_entered(body):
+	if body.is_in_group("PlayerGroup"):
+		interact = DOOR
+		filepath = "res://level_3.tscn"
+		Globals.spawnLocation = Vector2(312, 184)
+
+func _on_to_town_from_farm_body_exited(body):
+	if body.is_in_group("PlayerGroup"):
+		interact = NA
+		filepath = ""
+
+func _on_to_cliff_from_farm_body_entered(body):
+	if body.is_in_group("PlayerGroup"):
+		interact = DOOR
+		filepath = "res://level_7.tscn"
+		Globals.spawnLocation = Vector2(10, 184)
+
+func _on_to_cliff_from_farm_body_exited(body):
+	if body.is_in_group("PlayerGroup"):
+		interact = NA
+		filepath = ""
+
 # Level 7
 # Level 8
 # Level 9
@@ -201,7 +231,6 @@ func _on_boris_body_entered(body):
 		print("can interact")
 		interact = TALK
 		NPC = BORIS
-
 
 func _on_boris_body_exited(body):
 	if body.is_in_group("PlayerGroup"):
@@ -239,8 +268,19 @@ func _on_barber_body_entered(body):
 		interact = TALK
 		NPC = BARBER
 
-
 func _on_barber_body_exited(body):
+	if body.is_in_group("PlayerGroup"):
+		print("cannot interact")
+		interact = NA
+		NPC = NONE
+
+func _on_farmer_body_entered(body):
+	if body.is_in_group("PlayerGroup"):
+		print("can interact")
+		interact = TALK
+		NPC = FARMER
+
+func _on_farmer_body_exited(body):
 	if body.is_in_group("PlayerGroup"):
 		print("cannot interact")
 		interact = NA

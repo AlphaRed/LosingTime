@@ -1,7 +1,40 @@
-[gd_scene load_steps=3 format=3 uid="uid://tiuvfrx5afac"]
+[gd_scene load_steps=11 format=3 uid="uid://tiuvfrx5afac"]
 
 [ext_resource type="TileSet" uid="uid://cci23yfdd8pnl" path="res://tilemap.tres" id="1_e0m8e"]
 [ext_resource type="PackedScene" uid="uid://dv5ydw3aqc2mv" path="res://player.tscn" id="2_o5kni"]
+[ext_resource type="Script" path="res://Farmer.gd" id="3_duenm"]
+[ext_resource type="Texture2D" uid="uid://bgs26kg173ngn" path="res://chars.png" id="3_hxjn2"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4kd0c"]
+size = Vector2(16, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_iyfto"]
+size = Vector2(16, 17)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b1o4d"]
+atlas = ExtResource("3_hxjn2")
+region = Rect2(176, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qwr4r"]
+atlas = ExtResource("3_hxjn2")
+region = Rect2(160, 16, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_kidi3"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b1o4d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qwr4r")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 2.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3rucv"]
+size = Vector2(48, 16)
 
 [node name="Level6" type="Node2D"]
 
@@ -12,3 +45,38 @@ layer_0/tile_data = PackedInt32Array(0, 196608, 5, 1, 196608, 5, 2, 196608, 5, 3
 
 [node name="Player" parent="." instance=ExtResource("2_o5kni")]
 position = Vector2(23, 184)
+
+[node name="ToTownFromFarm" type="Area2D" parent="."]
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ToTownFromFarm"]
+position = Vector2(8, 184)
+shape = SubResource("RectangleShape2D_4kd0c")
+debug_color = Color(0.866667, 0, 0.862745, 0.419608)
+
+[node name="ToCliffFromFarm" type="Area2D" parent="."]
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ToCliffFromFarm"]
+position = Vector2(312, 183.5)
+shape = SubResource("RectangleShape2D_iyfto")
+debug_color = Color(0.866667, 0, 0.862745, 0.419608)
+
+[node name="Farmer" type="Area2D" parent="."]
+position = Vector2(200, 168)
+collision_mask = 2
+script = ExtResource("3_duenm")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Farmer"]
+sprite_frames = SubResource("SpriteFrames_kidi3")
+animation = &"idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Farmer"]
+shape = SubResource("RectangleShape2D_3rucv")
+
+[connection signal="body_entered" from="ToTownFromFarm" to="Player" method="_on_to_town_from_farm_body_entered"]
+[connection signal="body_exited" from="ToTownFromFarm" to="Player" method="_on_to_town_from_farm_body_exited"]
+[connection signal="body_entered" from="ToCliffFromFarm" to="Player" method="_on_to_cliff_from_farm_body_entered"]
+[connection signal="body_exited" from="ToCliffFromFarm" to="Player" method="_on_to_cliff_from_farm_body_exited"]
+[connection signal="body_entered" from="Farmer" to="Player" method="_on_farmer_body_entered"]
+[connection signal="body_exited" from="Farmer" to="Player" method="_on_farmer_body_exited"]
