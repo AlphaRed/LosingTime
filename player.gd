@@ -222,6 +222,28 @@ func _on_to_cliff_from_farm_body_exited(body):
 		filepath = ""
 
 # Level 7
+func _on_to_farm_from_cliff_body_entered(body):
+	if body.is_in_group("PlayerGroup"):
+		interact = DOOR
+		filepath = "res://level_6.tscn"
+		Globals.spawnLocation = Vector2(312, 184)
+
+func _on_to_farm_from_cliff_body_exited(body):
+	if body.is_in_group("PlayerGroup"):
+		interact = NA
+		filepath = ""
+
+func _on_to_pond_from_cliff_body_entered(body):
+	if body.is_in_group("PlayerGroup"):
+		interact = DOOR
+		filepath = "res://level_8.tscn"
+		Globals.spawnLocation = Vector2(10, 184)
+
+func _on_to_pond_from_cliff_body_exited(body):
+	if body.is_in_group("PlayerGroup"):
+		interact = NA
+		filepath = ""
+
 # Level 8
 # Level 9
 
@@ -281,6 +303,18 @@ func _on_farmer_body_entered(body):
 		NPC = FARMER
 
 func _on_farmer_body_exited(body):
+	if body.is_in_group("PlayerGroup"):
+		print("cannot interact")
+		interact = NA
+		NPC = NONE
+
+func _on_glider_body_entered(body):
+	if body.is_in_group("PlayerGroup"):
+		print("can interact")
+		interact = TALK
+		NPC = GLIDER
+
+func _on_glider_body_exited(body):
 	if body.is_in_group("PlayerGroup"):
 		print("cannot interact")
 		interact = NA
