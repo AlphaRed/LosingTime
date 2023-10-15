@@ -268,6 +268,16 @@ func _on_to_dump_from_pond_body_exited(body):
 		filepath = ""
 
 # Level 9
+func _on_to_pond_from_dump_body_entered(body):
+	if body.is_in_group("PlayerGroup"):
+		interact = DOOR
+		filepath = "res://level_8.tscn"
+		Globals.spawnLocation = Vector2(312, 184)
+
+func _on_to_pond_from_dump_body_exited(body):
+	if body.is_in_group("PlayerGroup"):
+		interact = NA
+		filepath = ""
 
 # Talking methods
 func _on_boris_body_entered(body):
@@ -349,6 +359,18 @@ func _on_diver_body_entered(body):
 		NPC = DIVER
 
 func _on_diver_body_exited(body):
+	if body.is_in_group("PlayerGroup"):
+		print("cannot interact")
+		interact = NA
+		NPC = NONE
+
+func _on_oscar_body_entered(body):
+	if body.is_in_group("PlayerGroup"):
+		print("can interact")
+		interact = TALK
+		NPC = OSCAR
+
+func _on_oscar_body_exited(body):
 	if body.is_in_group("PlayerGroup"):
 		print("cannot interact")
 		interact = NA

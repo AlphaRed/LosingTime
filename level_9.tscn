@@ -1,7 +1,37 @@
-[gd_scene load_steps=3 format=3 uid="uid://bct43xcyxymuu"]
+[gd_scene load_steps=10 format=3 uid="uid://bct43xcyxymuu"]
 
 [ext_resource type="TileSet" uid="uid://cci23yfdd8pnl" path="res://tilemap.tres" id="1_6de5x"]
 [ext_resource type="PackedScene" uid="uid://dv5ydw3aqc2mv" path="res://player.tscn" id="2_jlpfd"]
+[ext_resource type="Texture2D" uid="uid://bgs26kg173ngn" path="res://chars.png" id="3_gqqbf"]
+[ext_resource type="Script" path="res://Oscar.gd" id="3_vfwd2"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8dfnv"]
+size = Vector2(16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yk6dp"]
+atlas = ExtResource("3_gqqbf")
+region = Rect2(240, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f32fn"]
+atlas = ExtResource("3_gqqbf")
+region = Rect2(224, 16, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_qaudo"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yk6dp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f32fn")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 2.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_f57xm"]
+size = Vector2(32, 16)
 
 [node name="Level9" type="Node2D"]
 
@@ -12,3 +42,29 @@ layer_0/tile_data = PackedInt32Array(0, 196608, 5, 1, 196608, 5, 2, 196608, 5, 3
 
 [node name="Player" parent="." instance=ExtResource("2_jlpfd")]
 position = Vector2(25, 184)
+
+[node name="ToPondFromDump" type="Area2D" parent="."]
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ToPondFromDump"]
+position = Vector2(8, 184)
+shape = SubResource("RectangleShape2D_8dfnv")
+debug_color = Color(0.866667, 0, 0.862745, 0.419608)
+
+[node name="Oscar" type="Area2D" parent="."]
+collision_mask = 2
+script = ExtResource("3_vfwd2")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Oscar"]
+position = Vector2(264, 168)
+sprite_frames = SubResource("SpriteFrames_qaudo")
+animation = &"idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Oscar"]
+position = Vector2(256, 168)
+shape = SubResource("RectangleShape2D_f57xm")
+
+[connection signal="body_entered" from="ToPondFromDump" to="Player" method="_on_to_pond_from_dump_body_entered"]
+[connection signal="body_exited" from="ToPondFromDump" to="Player" method="_on_to_pond_from_dump_body_exited"]
+[connection signal="body_entered" from="Oscar" to="Player" method="_on_oscar_body_entered"]
+[connection signal="body_exited" from="Oscar" to="Player" method="_on_oscar_body_exited"]
