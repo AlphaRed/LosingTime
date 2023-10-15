@@ -13,15 +13,14 @@ var Farmer = "Hi"
 
 
 func _ready():
-	# hide on startup!
-	self.visible = false
+	pass
 
 func _on_player_interact_talk(NPC_name):
 	# open or close dialog box
-	if self.visible == false:
-		self.visible = true
+	if self.get_offset() == Vector2(0, 100):
+		self.set_offset(Vector2(0, 0))
 	else:
-		self.visible = false
+		self.set_offset(Vector2(0, 100))
 	
 	# set the text
 	if NPC_name == BORIS:

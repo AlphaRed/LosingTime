@@ -69,6 +69,8 @@ limit_right = 320
 limit_bottom = 240
 
 [node name="DialogBox" type="CanvasLayer" parent="."]
+offset = Vector2(0, 100)
+transform = Transform2D(1, 0, 0, 1, 0, 100)
 script = ExtResource("3_pqm1r")
 
 [node name="Background" type="ColorRect" parent="DialogBox"]
@@ -76,7 +78,7 @@ offset_left = 5.0
 offset_top = 178.0
 offset_right = 251.0
 offset_bottom = 218.0
-color = Color(0.0431373, 0.133333, 0.235294, 0)
+color = Color(0.0431373, 0.133333, 0.235294, 1)
 
 [node name="Text" type="Label" parent="DialogBox"]
 offset_left = 8.0
