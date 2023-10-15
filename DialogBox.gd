@@ -11,8 +11,8 @@ var Mechanic = "We fix cars here, no generators... But I do have an extra oxygen
 var Barber = "I am very busy right now. Why don't you take a seat and read a magazine for now?"
 var Farmer = "This here windmill doesn't generate nearly enough electricity!"
 var Glider = "Damn it! I'm not sure I have the confidence to fly this bad boy."
-var Diver = "Hi"
-var Oscar = "Hi"
+var Diver = "I would like to go for a swim, but I haven't got an oxygen tank!"
+var Oscar = "Garbare Gar Gaerg!! Trash Yum Yum!!"
 
 func _ready():
 	pass

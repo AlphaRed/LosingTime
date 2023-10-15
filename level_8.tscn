@@ -1,7 +1,40 @@
-[gd_scene load_steps=3 format=3 uid="uid://bb6qwecafrjwl"]
+[gd_scene load_steps=11 format=3 uid="uid://bb6qwecafrjwl"]
 
 [ext_resource type="TileSet" uid="uid://cci23yfdd8pnl" path="res://tilemap.tres" id="1_o3h3f"]
 [ext_resource type="PackedScene" uid="uid://dv5ydw3aqc2mv" path="res://player.tscn" id="2_dg4t7"]
+[ext_resource type="Texture2D" uid="uid://bgs26kg173ngn" path="res://chars.png" id="3_3ajhh"]
+[ext_resource type="Script" path="res://Diver.gd" id="3_flhfr"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xxit6"]
+size = Vector2(16, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jwvqf"]
+size = Vector2(16, 17)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n5r0n"]
+atlas = ExtResource("3_3ajhh")
+region = Rect2(128, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0774h"]
+atlas = ExtResource("3_3ajhh")
+region = Rect2(144, 16, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_xatec"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n5r0n")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0774h")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 2.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kjlnn"]
+size = Vector2(44, 16)
 
 [node name="Level8" type="Node2D"]
 
@@ -12,3 +45,39 @@ layer_0/tile_data = PackedInt32Array(0, 196608, 5, 1, 196608, 5, 2, 196608, 5, 3
 
 [node name="Player" parent="." instance=ExtResource("2_dg4t7")]
 position = Vector2(24, 184)
+
+[node name="ToCliffFromPond" type="Area2D" parent="."]
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ToCliffFromPond"]
+position = Vector2(8, 184)
+shape = SubResource("RectangleShape2D_xxit6")
+debug_color = Color(0.866667, 0, 0.862745, 0.419608)
+
+[node name="ToDumpFromPond" type="Area2D" parent="."]
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ToDumpFromPond"]
+position = Vector2(312, 183.5)
+shape = SubResource("RectangleShape2D_jwvqf")
+debug_color = Color(0.866667, 0, 0.862745, 0.419608)
+
+[node name="Diver" type="Area2D" parent="."]
+collision_mask = 2
+script = ExtResource("3_flhfr")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Diver"]
+position = Vector2(56, 184)
+sprite_frames = SubResource("SpriteFrames_xatec")
+animation = &"idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Diver"]
+position = Vector2(58, 184)
+shape = SubResource("RectangleShape2D_kjlnn")
+
+[connection signal="body_entered" from="ToCliffFromPond" to="Player" method="_on_to_cliff_from_pond_body_entered"]
+[connection signal="body_exited" from="ToCliffFromPond" to="Player" method="_on_to_cliff_from_pond_body_exited"]
+[connection signal="body_entered" from="ToDumpFromPond" to="Player" method="_on_to_dump_from_pond_body_entered"]
+[connection signal="body_exited" from="ToDumpFromPond" to="Player" method="_on_to_dump_from_pond_body_exited"]
+[connection signal="body_entered" from="Diver" to="Player" method="_on_diver_body_entered"]
+[connection signal="body_exited" from="Diver" to="Player" method="_on_diver_body_exited"]
