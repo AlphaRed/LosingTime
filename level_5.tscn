@@ -1,9 +1,11 @@
-[gd_scene load_steps=10 format=3 uid="uid://djjat2uc38l8c"]
+[gd_scene load_steps=15 format=3 uid="uid://djjat2uc38l8c"]
 
 [ext_resource type="TileSet" uid="uid://cci23yfdd8pnl" path="res://tilemap.tres" id="1_tsbbp"]
 [ext_resource type="PackedScene" uid="uid://dv5ydw3aqc2mv" path="res://player.tscn" id="2_hpag4"]
 [ext_resource type="Script" path="res://Barber.gd" id="3_aplnc"]
 [ext_resource type="Texture2D" uid="uid://bgs26kg173ngn" path="res://chars.png" id="3_oglmw"]
+[ext_resource type="Script" path="res://Magazine.gd" id="5_f7rm4"]
+[ext_resource type="Texture2D" uid="uid://dluwencm575fs" path="res://items.png" id="5_xbdyw"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wb7xe"]
 size = Vector2(16, 16)
@@ -32,6 +34,24 @@ animations = [{
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_165wh"]
 size = Vector2(48, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p17dd"]
+atlas = ExtResource("5_xbdyw")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_iel0o"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p17dd")
+}],
+"loop": true,
+"name": &"default",
+"speed": 2.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0n7yg"]
+size = Vector2(16, 27)
 
 [node name="Level5" type="Node2D"]
 
@@ -64,7 +84,22 @@ frame_progress = 0.792175
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Barber"]
 shape = SubResource("RectangleShape2D_165wh")
 
+[node name="Magazine" type="Area2D" parent="."]
+collision_mask = 2
+script = ExtResource("5_f7rm4")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Magazine"]
+position = Vector2(105, 173)
+sprite_frames = SubResource("SpriteFrames_iel0o")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Magazine"]
+position = Vector2(104, 178.5)
+shape = SubResource("RectangleShape2D_0n7yg")
+
+[connection signal="hide_magazine" from="Player" to="Magazine" method="_on_player_hide_magazine"]
 [connection signal="body_entered" from="ToTownFromBarber" to="Player" method="_on_to_town_from_barber_body_entered"]
 [connection signal="body_exited" from="ToTownFromBarber" to="Player" method="_on_to_town_from_barber_body_exited"]
 [connection signal="body_entered" from="Barber" to="Player" method="_on_barber_body_entered"]
 [connection signal="body_exited" from="Barber" to="Player" method="_on_barber_body_exited"]
+[connection signal="body_entered" from="Magazine" to="Player" method="_on_magazine_body_entered"]
+[connection signal="body_exited" from="Magazine" to="Player" method="_on_magazine_body_exited"]

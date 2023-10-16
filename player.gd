@@ -2,8 +2,11 @@ extends CharacterBody2D
 
 enum {NA, DOOR, TALK, PICKUP} # interaction enum
 enum {NONE, BORIS, VENDOR, MECHANIC, BARBER, FARMER, GLIDER, DIVER, OSCAR} # NPC enum
+enum {NO_ITEM, O2TANK, SCUBA, MAGAZINE, FAN, METAL, DUNNO} # Item enum
 
 signal interact_talk(NPC_name)
+signal hide_o2tank()
+signal hide_magazine()
 
 var max_speed = 150.0
 var acceleration = 100.0
@@ -13,6 +16,7 @@ var dir = Vector2.ZERO
 var interact = NA
 var NPC = NONE
 var filepath = ""
+var Item = NO_ITEM
 
 @onready var sprite = $AnimatedSprite2D
 @onready var cam = $Camera2D
@@ -56,6 +60,8 @@ func get_input() -> Vector2:
 				interact_talk.emit(OSCAR)
 			else:
 				pass
+		elif interact == PICKUP:
+			add_inventory(Item)
 	
 	return dir.normalized()
 
@@ -90,6 +96,14 @@ func _physics_process(delta):
 
 func _ready():
 	set_position(Globals.spawnLocation)
+
+func add_inventory(item_pickup):
+	if item_pickup == O2TANK:
+		Globals.inventory.append("O2Tank")
+		hide_o2tank.emit()
+	elif item_pickup == MAGAZINE:
+		Globals.inventory.append("Magazine")
+		hide_magazine.emit()
 
 # Next Level Methods
 # Level 1
@@ -375,3 +389,24 @@ func _on_oscar_body_exited(body):
 		print("cannot interact")
 		interact = NA
 		NPC = NONE
+
+# Items
+func _on_o_2_tank_body_entered(body):
+	if body.is_in_group("PlayerGroup"):
+		interact = PICKUP
+		Item = O2TANK
+
+func _on_o_2_tank_body_exited(body):
+	if body.is_in_group("PlayerGroup"):
+		interact = NA
+		Item = NO_ITEM
+
+func _on_magazine_body_entered(body):
+	if body.is_in_group("PlayerGroup"):
+		interact = PICKUP
+		Item = MAGAZINE
+
+func _on_magazine_body_exited(body):
+	if body.is_in_group("PlayerGroup"):
+		interact = NA
+		Item = NO_ITEM

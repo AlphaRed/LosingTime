@@ -1,9 +1,11 @@
-[gd_scene load_steps=10 format=3 uid="uid://btdgi1md7ksqm"]
+[gd_scene load_steps=15 format=3 uid="uid://btdgi1md7ksqm"]
 
 [ext_resource type="TileSet" uid="uid://cci23yfdd8pnl" path="res://tilemap.tres" id="1_vubb4"]
 [ext_resource type="PackedScene" uid="uid://dv5ydw3aqc2mv" path="res://player.tscn" id="2_gdy4r"]
 [ext_resource type="Script" path="res://Mechanic.gd" id="3_8ar1e"]
 [ext_resource type="Texture2D" uid="uid://bgs26kg173ngn" path="res://chars.png" id="3_elgy8"]
+[ext_resource type="Texture2D" uid="uid://dluwencm575fs" path="res://items.png" id="5_dlbue"]
+[ext_resource type="Script" path="res://O2Tank.gd" id="5_rysjs"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lle7b"]
 size = Vector2(16, 16)
@@ -32,6 +34,24 @@ animations = [{
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rf3s7"]
 size = Vector2(48, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ox8c4"]
+atlas = ExtResource("5_dlbue")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_nqmim"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ox8c4")
+}],
+"loop": true,
+"name": &"default",
+"speed": 1.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hjl1l"]
+size = Vector2(16, 16)
 
 [node name="Level4" type="Node2D"]
 
@@ -66,7 +86,22 @@ frame_progress = 0.213055
 position = Vector2(-1, 0)
 shape = SubResource("RectangleShape2D_rf3s7")
 
+[node name="O2Tank" type="Area2D" parent="."]
+collision_mask = 2
+script = ExtResource("5_rysjs")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="O2Tank"]
+position = Vector2(200, 184)
+sprite_frames = SubResource("SpriteFrames_nqmim")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="O2Tank"]
+position = Vector2(200, 184)
+shape = SubResource("RectangleShape2D_hjl1l")
+
+[connection signal="hide_o2tank" from="Player" to="O2Tank" method="_on_player_hide_o_2_tank"]
 [connection signal="body_entered" from="ToTownFromGarage" to="Player" method="_on_to_town_from_garage_body_entered"]
 [connection signal="body_exited" from="ToTownFromGarage" to="Player" method="_on_to_town_from_garage_body_exited"]
 [connection signal="body_entered" from="Mechanic" to="Player" method="_on_mechanic_body_entered"]
 [connection signal="body_exited" from="Mechanic" to="Player" method="_on_mechanic_body_exited"]
+[connection signal="body_entered" from="O2Tank" to="Player" method="_on_o_2_tank_body_entered"]
+[connection signal="body_exited" from="O2Tank" to="Player" method="_on_o_2_tank_body_exited"]
