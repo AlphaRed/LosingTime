@@ -5,8 +5,6 @@ enum {NONE, BORIS, VENDOR, MECHANIC, BARBER, FARMER, GLIDER, DIVER, OSCAR} # NPC
 enum {NO_ITEM, O2TANK, SCUBA, MAGAZINE, FAN, METAL, DUNNO} # Item enum
 
 signal interact_talk(NPC_name)
-signal hide_o2tank()
-signal hide_magazine()
 
 var max_speed = 150.0
 var acceleration = 100.0
@@ -100,10 +98,10 @@ func _ready():
 func add_inventory(item_pickup):
 	if item_pickup == O2TANK:
 		Globals.inventory.append("O2Tank")
-		hide_o2tank.emit()
 	elif item_pickup == MAGAZINE:
 		Globals.inventory.append("Magazine")
-		hide_magazine.emit()
+	elif item_pickup == FAN:
+		Globals.inventory.append("Fan")
 
 # Next Level Methods
 # Level 1
@@ -407,6 +405,16 @@ func _on_magazine_body_entered(body):
 		Item = MAGAZINE
 
 func _on_magazine_body_exited(body):
+	if body.is_in_group("PlayerGroup"):
+		interact = NA
+		Item = NO_ITEM
+
+func _on_fan_body_entered(body):
+	if body.is_in_group("PlayerGroup"):
+		interact = PICKUP
+		Item = FAN
+
+func _on_fan_body_exited(body):
 	if body.is_in_group("PlayerGroup"):
 		interact = NA
 		Item = NO_ITEM

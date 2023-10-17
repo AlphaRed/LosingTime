@@ -1,9 +1,11 @@
-[gd_scene load_steps=11 format=3 uid="uid://tiuvfrx5afac"]
+[gd_scene load_steps=16 format=3 uid="uid://tiuvfrx5afac"]
 
 [ext_resource type="TileSet" uid="uid://cci23yfdd8pnl" path="res://tilemap.tres" id="1_e0m8e"]
 [ext_resource type="PackedScene" uid="uid://dv5ydw3aqc2mv" path="res://player.tscn" id="2_o5kni"]
 [ext_resource type="Script" path="res://Farmer.gd" id="3_duenm"]
 [ext_resource type="Texture2D" uid="uid://bgs26kg173ngn" path="res://chars.png" id="3_hxjn2"]
+[ext_resource type="Texture2D" uid="uid://dluwencm575fs" path="res://items.png" id="5_7ybsc"]
+[ext_resource type="Script" path="res://Fan.gd" id="5_bmas7"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4kd0c"]
 size = Vector2(16, 16)
@@ -34,7 +36,25 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3rucv"]
-size = Vector2(48, 16)
+size = Vector2(35, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3kl4k"]
+atlas = ExtResource("5_7ybsc")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_jfsfy"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3kl4k")
+}],
+"loop": true,
+"name": &"default",
+"speed": 1.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_iscgk"]
+size = Vector2(16, 16)
 
 [node name="Level6" type="Node2D"]
 
@@ -72,7 +92,21 @@ sprite_frames = SubResource("SpriteFrames_kidi3")
 animation = &"idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Farmer"]
+position = Vector2(-6.5, 0)
 shape = SubResource("RectangleShape2D_3rucv")
+
+[node name="Fan" type="Area2D" parent="."]
+position = Vector2(8, -87)
+collision_mask = 2
+script = ExtResource("5_bmas7")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Fan"]
+position = Vector2(231, 255)
+sprite_frames = SubResource("SpriteFrames_jfsfy")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Fan"]
+position = Vector2(231, 255)
+shape = SubResource("RectangleShape2D_iscgk")
 
 [connection signal="body_entered" from="ToTownFromFarm" to="Player" method="_on_to_town_from_farm_body_entered"]
 [connection signal="body_exited" from="ToTownFromFarm" to="Player" method="_on_to_town_from_farm_body_exited"]
@@ -80,3 +114,5 @@ shape = SubResource("RectangleShape2D_3rucv")
 [connection signal="body_exited" from="ToCliffFromFarm" to="Player" method="_on_to_cliff_from_farm_body_exited"]
 [connection signal="body_entered" from="Farmer" to="Player" method="_on_farmer_body_entered"]
 [connection signal="body_exited" from="Farmer" to="Player" method="_on_farmer_body_exited"]
+[connection signal="body_entered" from="Fan" to="Player" method="_on_fan_body_entered"]
+[connection signal="body_exited" from="Fan" to="Player" method="_on_fan_body_exited"]

@@ -41,6 +41,8 @@ func _on_player_interact_talk(NPC_name):
 	elif NPC_name == FARMER:
 		if Globals.inventory.count("Magazine") > 0:
 			textbox.text = Farmer_other
+			Globals.drop_fan_item = true
+			print("should appear!")
 		else:
 			textbox.text = Farmer
 	elif NPC_name == DIVER:

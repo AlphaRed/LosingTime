@@ -98,7 +98,6 @@ sprite_frames = SubResource("SpriteFrames_nqmim")
 position = Vector2(200, 184)
 shape = SubResource("RectangleShape2D_hjl1l")
 
-[connection signal="hide_o2tank" from="Player" to="O2Tank" method="_on_player_hide_o_2_tank"]
 [connection signal="body_entered" from="ToTownFromGarage" to="Player" method="_on_to_town_from_garage_body_entered"]
 [connection signal="body_exited" from="ToTownFromGarage" to="Player" method="_on_to_town_from_garage_body_exited"]
 [connection signal="body_entered" from="Mechanic" to="Player" method="_on_mechanic_body_entered"]

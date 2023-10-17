@@ -96,7 +96,6 @@ sprite_frames = SubResource("SpriteFrames_iel0o")
 position = Vector2(104, 178.5)
 shape = SubResource("RectangleShape2D_0n7yg")
 
-[connection signal="hide_magazine" from="Player" to="Magazine" method="_on_player_hide_magazine"]
 [connection signal="body_entered" from="ToTownFromBarber" to="Player" method="_on_to_town_from_barber_body_entered"]
 [connection signal="body_exited" from="ToTownFromBarber" to="Player" method="_on_to_town_from_barber_body_exited"]
 [connection signal="body_entered" from="Barber" to="Player" method="_on_barber_body_entered"]
