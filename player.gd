@@ -2,7 +2,7 @@ extends CharacterBody2D
 
 enum {NA, DOOR, TALK, PICKUP} # interaction enum
 enum {NONE, BORIS, VENDOR, MECHANIC, BARBER, FARMER, GLIDER, DIVER, OSCAR} # NPC enum
-enum {NO_ITEM, O2TANK, SCUBA, MAGAZINE, FAN, METAL, DUNNO} # Item enum
+enum {NO_ITEM, O2TANK, SCUBA, MAGAZINE, FAN, MATTRESS, BELLOWS} # Item enum
 
 signal interact_talk(NPC_name)
 
@@ -102,6 +102,8 @@ func add_inventory(item_pickup):
 		Globals.inventory.append("Magazine")
 	elif item_pickup == FAN:
 		Globals.inventory.append("Fan")
+	elif item_pickup == MATTRESS:
+		Globals.inventory.append("Mattress")
 
 # Next Level Methods
 # Level 1
@@ -388,6 +390,18 @@ func _on_oscar_body_exited(body):
 		interact = NA
 		NPC = NONE
 
+func _on_glider_landed_body_entered(body):
+	if body.is_in_group("PlayerGroup"):
+		print("can interact")
+		interact = TALK
+		NPC = GLIDER
+
+func _on_glider_landed_body_exited(body):
+	if body.is_in_group("PlayerGroup"):
+		print("cannot interact")
+		interact = NA
+		NPC = NONE
+
 # Items
 func _on_o_2_tank_body_entered(body):
 	if body.is_in_group("PlayerGroup"):
@@ -415,6 +429,16 @@ func _on_fan_body_entered(body):
 		Item = FAN
 
 func _on_fan_body_exited(body):
+	if body.is_in_group("PlayerGroup"):
+		interact = NA
+		Item = NO_ITEM
+
+func _on_mattress_body_entered(body):
+	if body.is_in_group("PlayerGroup"):
+		interact = PICKUP
+		Item = MATTRESS
+
+func _on_mattress_body_exited(body):
 	if body.is_in_group("PlayerGroup"):
 		interact = NA
 		Item = NO_ITEM

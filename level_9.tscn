@@ -1,9 +1,12 @@
-[gd_scene load_steps=10 format=3 uid="uid://bct43xcyxymuu"]
+[gd_scene load_steps=20 format=3 uid="uid://bct43xcyxymuu"]
 
 [ext_resource type="TileSet" uid="uid://cci23yfdd8pnl" path="res://tilemap.tres" id="1_6de5x"]
 [ext_resource type="PackedScene" uid="uid://dv5ydw3aqc2mv" path="res://player.tscn" id="2_jlpfd"]
 [ext_resource type="Texture2D" uid="uid://bgs26kg173ngn" path="res://chars.png" id="3_gqqbf"]
 [ext_resource type="Script" path="res://Oscar.gd" id="3_vfwd2"]
+[ext_resource type="Script" path="res://GliderLanded.gd" id="5_fb4b0"]
+[ext_resource type="Script" path="res://Mattress.gd" id="6_nt7sp"]
+[ext_resource type="Texture2D" uid="uid://dluwencm575fs" path="res://items.png" id="6_oso5e"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8dfnv"]
 size = Vector2(16, 16)
@@ -32,6 +35,49 @@ animations = [{
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_f57xm"]
 size = Vector2(32, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ubgt4"]
+atlas = ExtResource("3_gqqbf")
+region = Rect2(64, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qkemq"]
+atlas = ExtResource("3_gqqbf")
+region = Rect2(80, 16, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_beolu"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ubgt4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qkemq")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 2.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cfcn1"]
+size = Vector2(31, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1tl51"]
+atlas = ExtResource("6_oso5e")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_fyaec"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1tl51")
+}],
+"loop": true,
+"name": &"default",
+"speed": 1.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jhk4l"]
+size = Vector2(16, 16)
 
 [node name="Level9" type="Node2D"]
 
@@ -64,7 +110,38 @@ animation = &"idle"
 position = Vector2(256, 168)
 shape = SubResource("RectangleShape2D_f57xm")
 
+[node name="GliderLanded" type="Area2D" parent="."]
+position = Vector2(0, 100)
+collision_mask = 2
+script = ExtResource("5_fb4b0")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="GliderLanded"]
+position = Vector2(120, 168)
+sprite_frames = SubResource("SpriteFrames_beolu")
+animation = &"idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GliderLanded"]
+position = Vector2(119.5, 168)
+shape = SubResource("RectangleShape2D_cfcn1")
+
+[node name="Mattress" type="Area2D" parent="."]
+position = Vector2(0, 100)
+collision_mask = 2
+script = ExtResource("6_nt7sp")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Mattress"]
+position = Vector2(152, 168)
+sprite_frames = SubResource("SpriteFrames_fyaec")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Mattress"]
+position = Vector2(152, 168)
+shape = SubResource("RectangleShape2D_jhk4l")
+
 [connection signal="body_entered" from="ToPondFromDump" to="Player" method="_on_to_pond_from_dump_body_entered"]
 [connection signal="body_exited" from="ToPondFromDump" to="Player" method="_on_to_pond_from_dump_body_exited"]
 [connection signal="body_entered" from="Oscar" to="Player" method="_on_oscar_body_entered"]
 [connection signal="body_exited" from="Oscar" to="Player" method="_on_oscar_body_exited"]
+[connection signal="body_entered" from="GliderLanded" to="Player" method="_on_glider_landed_body_entered"]
+[connection signal="body_exited" from="GliderLanded" to="Player" method="_on_glider_landed_body_exited"]
+[connection signal="body_entered" from="Mattress" to="Player" method="_on_mattress_body_entered"]
+[connection signal="body_exited" from="Mattress" to="Player" method="_on_mattress_body_exited"]

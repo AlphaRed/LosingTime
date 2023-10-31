@@ -6,4 +6,5 @@ func _ready():
 	sprite.play("idle")
 	
 	if Globals.glider_confidence == true:
-		queue_free()
+		self.set_position(Vector2(0,0))
+

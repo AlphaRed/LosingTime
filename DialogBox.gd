@@ -13,6 +13,7 @@ var Barber = "I am very busy right now. Why don't you take a seat and read a mag
 var Farmer = "This here windmill doesn't generate nearly enough electricity!"
 var Farmer_other = "That magazine has an article on geothermal energy! I won't need this."
 var Glider = "Damn it! I'm not sure I have the confidence to fly this bad boy."
+var Glider_other = "Whew! Thankfully this mattress softened my landing!"
 var Diver = "I would like to go for a swim, but I haven't got an oxygen tank!"
 var Oscar = "Garbare Gar Gaerg!! Trash Yum Yum!!"
 
@@ -48,6 +49,11 @@ func _on_player_interact_talk(NPC_name):
 	elif NPC_name == DIVER:
 		textbox.text = Diver
 	elif NPC_name == GLIDER:
-		textbox.text = Glider
+		if Globals.glider_confidence == true:
+			textbox.text = Glider_other
+		else:
+			textbox.text = Glider
+		if Globals.glider_confidence == false:
+			Globals.glider_confidence = true
 	elif NPC_name == OSCAR:
 		textbox.text = Oscar
