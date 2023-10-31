@@ -6,3 +6,5 @@ var inventory = Array()
 # Find a better way...
 var drop_fan_item = false
 var glider_confidence = false
+var mangos = false
+var mangos_delivered = false 

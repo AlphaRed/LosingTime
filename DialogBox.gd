@@ -7,6 +7,7 @@ enum {NONE, BORIS, VENDOR, MECHANIC, BARBER, FARMER, GLIDER, DIVER, OSCAR} # NPC
 
 var Boris = "We need to fix the generator to provide power. Igor, fetch me parts to fix it!"
 var Vendor = "Whadda ya want kid? Tell your friends about our fresh mangos!"
+var Vendor_other = "Wow! Those monsters bought me out. Here's something for the help!"
 var Mechanic = "We fix cars here, no generators... But I do have an extra oxygen tank you can have."
 var Mechanic_other = "Get outta my sight! I already gave you that oxygen tank for free!"
 var Barber = "I am very busy right now. Why don't you take a seat and read a magazine for now?"
@@ -16,6 +17,7 @@ var Glider = "Damn it! I'm not sure I have the confidence to fly this bad boy."
 var Glider_other = "Whew! Thankfully this mattress softened my landing!"
 var Diver = "I would like to go for a swim, but I haven't got an oxygen tank!"
 var Oscar = "Garbare Gar Gaerg!! Trash Yum Yum!!"
+var Oscar_other = "MANGOS?! Garbare Gar! We shall purchase many! Tell this vendor to deliver!"
 
 func _ready():
 	pass
@@ -31,7 +33,12 @@ func _on_player_interact_talk(NPC_name):
 	if NPC_name == BORIS:
 		textbox.text = Boris
 	elif NPC_name == VENDOR:
-		textbox.text = Vendor
+		if Globals.mangos_delivered == true:
+			textbox.text = Vendor_other
+		else:
+			textbox.text = Vendor
+			if Globals.mangos == false:
+				Globals.mangos = true
 	elif NPC_name == MECHANIC:
 		if Globals.inventory.count("O2Tank") > 0:
 			textbox.text = Mechanic_other
@@ -56,4 +63,9 @@ func _on_player_interact_talk(NPC_name):
 		if Globals.glider_confidence == false:
 			Globals.glider_confidence = true
 	elif NPC_name == OSCAR:
-		textbox.text = Oscar
+		if Globals.mangos == true:
+			textbox.text = Oscar_other
+			Globals.mangos_delivered = true
+			Globals.mangos = false
+		else:
+			textbox.text = Oscar
