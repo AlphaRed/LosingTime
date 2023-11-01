@@ -2,7 +2,7 @@ extends CharacterBody2D
 
 enum {NA, DOOR, TALK, PICKUP} # interaction enum
 enum {NONE, BORIS, VENDOR, MECHANIC, BARBER, FARMER, GLIDER, DIVER, OSCAR} # NPC enum
-enum {NO_ITEM, O2TANK, SCUBA, MAGAZINE, FAN, MATTRESS, BELLOWS} # Item enum
+enum {NO_ITEM, O2TANK, SNORKEL, MAGAZINE, FAN, MATTRESS, BELLOWS} # Item enum
 
 signal interact_talk(NPC_name)
 
@@ -104,6 +104,10 @@ func add_inventory(item_pickup):
 		Globals.inventory.append("Fan")
 	elif item_pickup == MATTRESS:
 		Globals.inventory.append("Mattress")
+	elif item_pickup == BELLOWS:
+		Globals.inventory.append("Bellows")
+	elif item_pickup == SNORKEL:
+		Globals.inventory.append("Snorkel")
 
 # Next Level Methods
 # Level 1
@@ -442,3 +446,6 @@ func _on_mattress_body_exited(body):
 	if body.is_in_group("PlayerGroup"):
 		interact = NA
 		Item = NO_ITEM
+
+func _on_dialog_box_add_item(item):
+	add_inventory(item)
