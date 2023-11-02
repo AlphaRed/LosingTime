@@ -1,9 +1,11 @@
-[gd_scene load_steps=11 format=3 uid="uid://dv5ydw3aqc2mv"]
+[gd_scene load_steps=25 format=3 uid="uid://dv5ydw3aqc2mv"]
 
 [ext_resource type="Texture2D" uid="uid://bgs26kg173ngn" path="res://chars.png" id="1_5quhv"]
 [ext_resource type="Script" path="res://player.gd" id="1_nop42"]
 [ext_resource type="Theme" uid="uid://fo1wws88ge36" path="res://menu_theme.tres" id="3_ij1dl"]
 [ext_resource type="Script" path="res://DialogBox.gd" id="3_pqm1r"]
+[ext_resource type="Texture2D" uid="uid://dluwencm575fs" path="res://items.png" id="5_0r8ou"]
+[ext_resource type="Script" path="res://ItemBox.gd" id="5_ywbg4"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_g4dmc"]
 size = Vector2(16, 16)
@@ -49,6 +51,96 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_24ogc"]
+atlas = ExtResource("5_0r8ou")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_u34l4"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_24ogc")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dvc2u"]
+atlas = ExtResource("5_0r8ou")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_i50ee"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dvc2u")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w2fwy"]
+atlas = ExtResource("5_0r8ou")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_2cqyc"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w2fwy")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5nm1k"]
+atlas = ExtResource("5_0r8ou")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_0pktl"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5nm1k")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o022t"]
+atlas = ExtResource("5_0r8ou")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ns0ws"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o022t")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hdj1g"]
+atlas = ExtResource("5_0r8ou")
+region = Rect2(80, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_gcpgx"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hdj1g")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
 [node name="Player" type="CharacterBody2D" groups=["PlayerGroup"]]
 collision_layer = 2
 script = ExtResource("1_nop42")
@@ -89,6 +181,33 @@ theme = ExtResource("3_ij1dl")
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 14
 autowrap_mode = 2
+
+[node name="ItemBox" type="CanvasLayer" parent="."]
+script = ExtResource("5_ywbg4")
+
+[node name="O2Tank" type="AnimatedSprite2D" parent="ItemBox"]
+position = Vector2(16, 16)
+sprite_frames = SubResource("SpriteFrames_u34l4")
+
+[node name="Snorkel" type="AnimatedSprite2D" parent="ItemBox"]
+position = Vector2(36, 16)
+sprite_frames = SubResource("SpriteFrames_i50ee")
+
+[node name="Magazine" type="AnimatedSprite2D" parent="ItemBox"]
+position = Vector2(56, 16)
+sprite_frames = SubResource("SpriteFrames_2cqyc")
+
+[node name="Fan" type="AnimatedSprite2D" parent="ItemBox"]
+position = Vector2(77, 16)
+sprite_frames = SubResource("SpriteFrames_0pktl")
+
+[node name="Mattress" type="AnimatedSprite2D" parent="ItemBox"]
+position = Vector2(98, 16)
+sprite_frames = SubResource("SpriteFrames_ns0ws")
+
+[node name="Bellows" type="AnimatedSprite2D" parent="ItemBox"]
+position = Vector2(119, 16)
+sprite_frames = SubResource("SpriteFrames_gcpgx")
 
 [connection signal="interact_talk" from="." to="DialogBox" method="_on_player_interact_talk"]
 [connection signal="add_item" from="DialogBox" to="." method="_on_dialog_box_add_item"]
