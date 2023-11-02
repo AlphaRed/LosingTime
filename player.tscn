@@ -185,6 +185,13 @@ autowrap_mode = 2
 [node name="ItemBox" type="CanvasLayer" parent="."]
 script = ExtResource("5_ywbg4")
 
+[node name="Border" type="ColorRect" parent="ItemBox"]
+offset_left = 5.0
+offset_top = 5.0
+offset_right = 128.0
+offset_bottom = 27.0
+color = Color(0.0980392, 0.0980392, 0.0980392, 1)
+
 [node name="O2Tank" type="AnimatedSprite2D" parent="ItemBox"]
 position = Vector2(16, 16)
 sprite_frames = SubResource("SpriteFrames_u34l4")
@@ -198,15 +205,15 @@ position = Vector2(56, 16)
 sprite_frames = SubResource("SpriteFrames_2cqyc")
 
 [node name="Fan" type="AnimatedSprite2D" parent="ItemBox"]
-position = Vector2(77, 16)
+position = Vector2(76, 16)
 sprite_frames = SubResource("SpriteFrames_0pktl")
 
 [node name="Mattress" type="AnimatedSprite2D" parent="ItemBox"]
-position = Vector2(98, 16)
+position = Vector2(96, 16)
 sprite_frames = SubResource("SpriteFrames_ns0ws")
 
 [node name="Bellows" type="AnimatedSprite2D" parent="ItemBox"]
-position = Vector2(119, 16)
+position = Vector2(116, 16)
 sprite_frames = SubResource("SpriteFrames_gcpgx")
 
 [connection signal="interact_talk" from="." to="DialogBox" method="_on_player_interact_talk"]
