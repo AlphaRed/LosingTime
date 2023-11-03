@@ -7,4 +7,5 @@ var inventory = Array()
 var drop_fan_item = false
 var glider_confidence = false
 var mangos = false
-var mangos_delivered = false 
+var mangos_delivered = false
+var win_condition = false

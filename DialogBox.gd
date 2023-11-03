@@ -2,11 +2,13 @@ extends CanvasLayer
 
 @onready var background = $Background
 @onready var textbox = $Text
+@onready var end_timer = $Timer
 
 enum {NONE, BORIS, VENDOR, MECHANIC, BARBER, FARMER, GLIDER, DIVER, OSCAR} # NPC enum
 enum {NO_ITEM, O2TANK, SNORKEL, MAGAZINE, FAN, MATTRESS, BELLOWS} # Item enum
 
 var Boris = "We need to fix the generator to provide power. Igor, fetch me parts to fix it!"
+var Boris_other = "Wunderbar Igor!!! These will do the trick!"
 var Vendor = "Whadda ya want kid? Tell your friends about our fresh mangos!"
 var Vendor_other = "Wow! Those monsters bought me out. Here's something for the help!"
 var Mechanic = "We fix cars here, no generators... But I do have an extra oxygen tank you can have."
@@ -35,7 +37,11 @@ func _on_player_interact_talk(NPC_name):
 	
 	# set the text
 	if NPC_name == BORIS:
-		textbox.text = Boris
+		if Globals.win_condition == true:
+			textbox.text = Boris_other
+			end_timer.start()
+		else:
+			textbox.text = Boris
 	elif NPC_name == VENDOR:
 		if Globals.mangos_delivered == true:
 			textbox.text = Vendor_other

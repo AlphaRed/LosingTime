@@ -95,6 +95,9 @@ func _physics_process(delta):
 func _ready():
 	set_position(Globals.spawnLocation)
 
+func _process(_delta):
+	check_win_condition()
+
 func add_inventory(item_pickup):
 	if item_pickup == O2TANK:
 		Globals.inventory.append("O2Tank")
@@ -449,3 +452,15 @@ func _on_mattress_body_exited(body):
 
 func _on_dialog_box_add_item(item):
 	add_inventory(item)
+
+func check_win_condition():
+	if Globals.inventory.count("O2Tank") > 0:
+		if Globals.inventory.count("Snorkel") > 0:
+			if Globals.inventory.count("Magazine") > 0:
+				if Globals.inventory.count("Fan") > 0:
+					if Globals.inventory.count("Mattress") > 0:
+						if Globals.inventory.count("Bellows") > 0:
+							Globals.win_condition = true
+
+func _on_timer_timeout():
+	get_tree().change_scene_to_file("res://menu.tscn")

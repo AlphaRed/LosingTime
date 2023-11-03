@@ -182,6 +182,10 @@ theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 14
 autowrap_mode = 2
 
+[node name="Timer" type="Timer" parent="DialogBox"]
+wait_time = 3.0
+one_shot = true
+
 [node name="ItemBox" type="CanvasLayer" parent="."]
 script = ExtResource("5_ywbg4")
 
@@ -218,3 +222,4 @@ sprite_frames = SubResource("SpriteFrames_gcpgx")
 
 [connection signal="interact_talk" from="." to="DialogBox" method="_on_player_interact_talk"]
 [connection signal="add_item" from="DialogBox" to="." method="_on_dialog_box_add_item"]
+[connection signal="timeout" from="DialogBox/Timer" to="." method="_on_timer_timeout"]
