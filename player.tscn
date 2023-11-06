@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://dv5ydw3aqc2mv"]
+[gd_scene load_steps=27 format=3 uid="uid://dv5ydw3aqc2mv"]
 
 [ext_resource type="Texture2D" uid="uid://bgs26kg173ngn" path="res://chars.png" id="1_5quhv"]
 [ext_resource type="Script" path="res://player.gd" id="1_nop42"]
@@ -6,6 +6,8 @@
 [ext_resource type="Script" path="res://DialogBox.gd" id="3_pqm1r"]
 [ext_resource type="Texture2D" uid="uid://dluwencm575fs" path="res://items.png" id="5_0r8ou"]
 [ext_resource type="Script" path="res://ItemBox.gd" id="5_ywbg4"]
+[ext_resource type="AudioStream" uid="uid://bhx00hqdhpjbc" path="res://jump.wav" id="7_xdrtv"]
+[ext_resource type="AudioStream" uid="uid://cpf4ywl3gtbuy" path="res://item.wav" id="8_pne4o"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_g4dmc"]
 size = Vector2(16, 16)
@@ -219,6 +221,12 @@ sprite_frames = SubResource("SpriteFrames_ns0ws")
 [node name="Bellows" type="AnimatedSprite2D" parent="ItemBox"]
 position = Vector2(116, 16)
 sprite_frames = SubResource("SpriteFrames_gcpgx")
+
+[node name="JumpSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_xdrtv")
+
+[node name="PickupSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_pne4o")
 
 [connection signal="interact_talk" from="." to="DialogBox" method="_on_player_interact_talk"]
 [connection signal="add_item" from="DialogBox" to="." method="_on_dialog_box_add_item"]

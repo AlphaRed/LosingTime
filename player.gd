@@ -18,6 +18,8 @@ var Item = NO_ITEM
 
 @onready var sprite = $AnimatedSprite2D
 @onready var cam = $Camera2D
+@onready var jumpsound = $JumpSound
+@onready var pickupsound = $PickupSound
 
 func get_input() -> Vector2:
 	# TO DO
@@ -35,6 +37,8 @@ func get_input() -> Vector2:
 	
 	if Input.is_action_pressed("jump"):
 		dir.y = -1
+		if jumpsound.is_playing() == false:
+			jumpsound.play()
 	
 	if Input.is_action_just_pressed("interact"): # less flickering this way
 		if interact == DOOR:
@@ -60,6 +64,7 @@ func get_input() -> Vector2:
 				pass
 		elif interact == PICKUP:
 			add_inventory(Item)
+			pickupsound.play()
 	
 	return dir.normalized()
 
